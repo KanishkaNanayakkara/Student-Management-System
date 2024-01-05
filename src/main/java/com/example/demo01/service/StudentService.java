@@ -1,14 +1,14 @@
 package com.example.demo01.service;
 
-import com.example.demo01.dto.StudentDto;
+import com.example.demo01.dto.StudentDTO;
 
 import java.util.List;
 
 public interface StudentService {
-    StudentDto createStudent(StudentDto studentDto);
-    StudentDto getStudentByID(Long studentId);
-    List<StudentDto> getAllStudents();
-    StudentDto updateStudent(Long studentId, StudentDto updatedEmployee);
+    StudentDTO createStudent(StudentDTO studentDto);
+    StudentDTO getStudentByID(Long studentId);
+    List<StudentDTO> getAllStudents();
+    StudentDTO updateStudent(Long studentId, StudentDTO updatedEmployee);
     void deleteStudent(Long studentId );
 
 }

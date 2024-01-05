@@ -1,6 +1,6 @@
 package com.example.demo01.service.impl;
 
-import com.example.demo01.dto.StudentDto;
+import com.example.demo01.dto.StudentDTO;
 import com.example.demo01.entity.Student;
 import com.example.demo01.exception.ResourceNotFoundException;
 import com.example.demo01.mapper.StudentMapper;
@@ -16,49 +16,52 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 
 public class StudentServiceImpl implements StudentService {
-
     private StudentRepository studentRepository;
+
     @Override
-    public StudentDto createStudent(StudentDto studentDto) {
 
-        Student student= StudentMapper.mapToStudent(studentDto);
+    public StudentDTO createStudent(StudentDTO studentDto) {
+        Student student = StudentMapper.mapToStudent(studentDto);
         Student savedStudent = studentRepository.save(student);
-
         return StudentMapper.mapToStudentDto(savedStudent);
     }
 
     @Override
-    public StudentDto getStudentByID(Long studentId) {
-        Student student=  studentRepository.findById(studentId)
+
+    public StudentDTO getStudentByID(Long studentId) {
+        Student student = studentRepository.findById(studentId)
                 .orElseThrow(() ->
-                        new ResourceNotFoundException("Student is not exist with given id : "+ studentId));
+                        new ResourceNotFoundException("Student is not exist with given id : " + studentId));
         return StudentMapper.mapToStudentDto(student);
     }
 
     @Override
-    public List<StudentDto> getAllStudents() {
-        List<Student> students=studentRepository.findAll();
+
+    public List<StudentDTO> getAllStudents() {
+        List<Student> students = studentRepository.findAll();
         return students.stream().map((student -> StudentMapper.mapToStudentDto(student)))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public StudentDto updateStudent(Long studentId, StudentDto updatedStudent) {
+
+    public StudentDTO updateStudent(Long studentId, StudentDTO updatedStudent) {
         Student student = studentRepository.findById(studentId).orElseThrow(
-                ()-> new ResourceNotFoundException("Student with the given id is  not exist ")
+                () -> new ResourceNotFoundException("Student with the given id is  not exist ")
         );
         student.setFirstName(updatedStudent.getFirstName());
         student.setLastName(updatedStudent.getLastName());
         student.setEmail(updatedStudent.getEmail());
 
-        Student updatedStudentobj= studentRepository.save(student);
+        Student updatedStudentobj = studentRepository.save(student);
         return StudentMapper.mapToStudentDto((updatedStudentobj));
     }
 
     @Override
+
     public void deleteStudent(Long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(
-                ()-> new ResourceNotFoundException("Student with the given id is  not exist ")
+                () -> new ResourceNotFoundException("Student with the given id is  not exist ")
         );
 
         studentRepository.deleteById((studentId));
